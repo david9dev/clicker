@@ -11,8 +11,10 @@ class HUD extends Component
     {
         super();
         this.state = {
-            boxes: []
+            boxes: [],
         };
+
+        // this.timesRendered = 10;
 
     }
 
@@ -32,9 +34,19 @@ class HUD extends Component
             alert("error");
         })
     }
-    createBox()
+    createBox(name,color)
     {
-
+        const newBox = {
+            name: name,
+            color: color
+        }
+        axios.post('http://localhost:3002/boxes',newBox)
+        .then((response) =>
+        {
+            this.setState({
+                boxes: response.data
+            })
+        })
     }
 
     updateBox(boxId)
@@ -49,6 +61,8 @@ class HUD extends Component
 
     render()
     {
+        // this.timesRendered++;
+        // console.log("HUD",this.timesRendered)
         if(this.state.boxes[0])
         {
             const {boxes} = this.state;
@@ -57,7 +71,9 @@ class HUD extends Component
                 <div className='HUD'>
                     <Collection boxes={boxes}/>
                     <Recentpop box={boxes[boxes.length - 1]}/>
-                    <Clickarea/>
+                    <Clickarea
+                    renderCount={this.timesRendered} 
+                    method={(name,color) => this.createBox(name,color)}/>
                 </div>
             );
         }

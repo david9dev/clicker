@@ -6,7 +6,8 @@ const app = express();
 
 app.use(bodyParser.json());
 
-//create app.post('/boxes')
+//create 
+app.post('/boxes', ctrlr.createBox)
 //read 
 app.get('/boxes', ctrlr.getAll);
 //update app.put('/boxes')

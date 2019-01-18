@@ -17,7 +17,8 @@ class Clickarea extends Component
         this.despawnBox = this.despawnBox.bind(this);
         this.stop = this.stop.bind(this);
 
-        this.pause = false;
+        //this.pause = false;
+        this.timesRendered = 0;
         this.clear = 0;
     }
 
@@ -27,8 +28,6 @@ spawnBox()
     let displayBoxesCopy = this.state.displayBoxes.slice()
 
     displayBoxesCopy.push(int);
-
-    clearTimeout(this.clear);
     this.setState({
         number: int,
         displayBoxes: displayBoxesCopy
@@ -47,42 +46,52 @@ despawnBox(index)
         this.setState({
             displayBoxes: copy
         })
-        clearTimeout(this.clear);
-    }
+        // clearTimeout(this.clear);
+        // this.spawnBox()rs
 
+    }
 }
 
-stop(stop)
+stop()
 {
-    console.log(stop);
-    console.log(this.pause)
-    if(this.pause)
+    if(this.state.paused)
     {
         this.setState({
             paused: false
         })
-        this.pause = false;
     }
     else 
     {
-        clearTimeout(stop);
-        this.pause = true;
+        this.setState({
+            paused: true
+        })
     }
 
 }
     render()
     {
-        this.clear = setTimeout(() =>
-        {
-            this.spawnBox();
-        }, 1000)
+        // this.timesRendered++;
+        // console.log("clickarea", this.timesRendered)
+        // if(this.props.renderCount >= this.timesRendered)
+        // {
+        //     this.clear = setTimeout(() =>
+        //     {
+        //      this.spawnBox();
+        //     }, 1000)
+        // }
+        // if(this.state.paused)
+        // {
+        //     clearTimeout(this.clear); 
+        // }
         const boxes = this.state.displayBoxes.map((curVal,index) =>
         {
             return(
                 <Box 
                 key={curVal} 
                 index={index}
+                paused = {this.state.paused}
                 destroy={(index,stop) => this.despawnBox(index,stop)}
+                toPop={(name, color) => this.props.method(name,color) }
                 />
             )
         })
@@ -90,8 +99,8 @@ stop(stop)
             <div className='clickarea'>
             {boxes}
                 <button
-                onClick={() => this.stop(this.clear)}>
-                    Pause
+                onClick={() => this.spawnBox()}>
+                    spawn
                 </button>
                 {this.state.number}
             </div>

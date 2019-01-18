@@ -22,7 +22,14 @@ module.exports = {
 
     createBox: function(request, response)
     {
-
+        id++;
+        const newBox = {
+            name: request.body.name,
+            color: request.body.color,
+            id: id
+        }
+        boxes.push(newBox);
+        response.status(200).send(boxes)
     },
 
     updateBox: function(request, response)
