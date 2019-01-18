@@ -1,7 +1,7 @@
 let boxes = [
     {
-        name: "asdf",
-        color: "#123456",
+        name: "",
+        color: "",
         id: 0
     }
 ];
@@ -39,7 +39,11 @@ module.exports = {
 
     deleteBox: function(request, response)
     {
-
+        boxes = boxes.filter((curVal) =>
+        {
+            return curVal.id !== parseInt(request.params.id,10);
+        })
+        response.status(200).send(boxes);
     },
 
 }

@@ -97,12 +97,12 @@ stop()
         })
         return(
             <div className='clickarea'>
-            {boxes}
                 <button
                 onClick={() => this.spawnBox()}>
                     spawn
                 </button>
                 {this.state.number}
+                {boxes}
             </div>
         )
     }

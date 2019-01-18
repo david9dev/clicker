@@ -34,6 +34,7 @@ class HUD extends Component
             alert("error");
         })
     }
+
     createBox(name,color)
     {
         const newBox = {
@@ -47,6 +48,11 @@ class HUD extends Component
                 boxes: response.data
             })
         })
+        .catch((error) =>
+        {
+            console.log(error);
+            alert("error");
+        })
     }
 
     updateBox(boxId)
@@ -56,32 +62,44 @@ class HUD extends Component
 
     deleteBox(boxId)
     {
+        axios.delete(`http://localhost:3002/boxes/${boxId}`)
+        .then((response) =>
+        {
+            this.setState({
+                boxes: response.data
+            })
+        })
+        .catch((error) => 
+        {
+            console.log(error);
+            alert("error");
+        })
 
     }
 
     render()
     {
-        // this.timesRendered++;
-        // console.log("HUD",this.timesRendered)
-        if(this.state.boxes[0])
-        {
             const {boxes} = this.state;
             
             return(
                 <div className='HUD'>
-                    <Collection boxes={boxes}/>
+                <section className ='left'>
                     <Recentpop box={boxes[boxes.length - 1]}/>
+                    <Collection boxes={boxes} method={(id) => this.deleteBox(id)}/>
+                    {/* <button>
+                        display collection
+                    </button> */}
+                </section>
+                <main>
                     <Clickarea
                     renderCount={this.timesRendered} 
                     method={(name,color) => this.createBox(name,color)}/>
+                </main>
+                <section className ='right'>
+
+                </section>
                 </div>
             );
-        }
-        return(
-            <div>
-                loading
-            </div>
-        );
     }
 }
 

@@ -11,7 +11,8 @@ app.post('/boxes', ctrlr.createBox)
 //read 
 app.get('/boxes', ctrlr.getAll);
 //update app.put('/boxes')
-//delete app.delete('/boxes')
+//delete 
+app.delete('/boxes/:id', ctrlr.deleteBox)
 
 app.listen(3002,() => 
 {

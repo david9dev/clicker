@@ -1,15 +1,25 @@
 import React from 'react';
+import './Collection.css'
+
 
 function Collection(props)
 {
-    //console.log(props.boxes.name);
+    //console.log(props.boxes)
     const collection = props.boxes.map((curVal,index) => 
     {
-        return(<div key={index}>{curVal.name}</div>)
+
+        return(
+        <div 
+            key={index}
+            className='caughtBox' style={{backgroundColor: curVal.color}}
+            onClick={() => props.method(curVal.id)}
+            >
+        </div>
+        )
     })
  return(
 
-     <div>
+     <div className='collection'>
          {collection}
      </div>
  )

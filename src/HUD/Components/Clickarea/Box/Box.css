@@ -1,8 +1,10 @@
 .box
 {
-    height: 100px;
-    width: 100px;
+    height: 35px;
+    width: 50px;
     position: relative;
     border: solid 1px black;
+    text-align: center;
+    padding-top: 15px;
 
 }

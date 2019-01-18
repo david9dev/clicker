@@ -5,8 +5,8 @@ class NewBox {
     constructor(name, color, chance, x, y) {
         this.name = name;
         this.sudoId = "";
-        this.color = color;
         this.chance = chance;
+        this.color = color;
         this.x = x;
         this.y = y;
         this.stop = 0;
