@@ -30,11 +30,11 @@ class HUD extends Component
         })
     }
 
-    createBox(name,color)
+    addPokemon(name,img)
     {
         const newBox = {
             name: name,
-            color: color
+            img: img
         }
         axios.post('http://localhost:3002/poke',newBox)
         .then((response) =>
@@ -98,8 +98,7 @@ class HUD extends Component
                 </aside>
                 <main>
                     <Clickarea
-                    pushPokemon={(name,color) => this.createBox(name,color)}
-                    getPokemon={(index) => this.getPokemon(index)}
+                    addPokemon={(name,img) => this.addPokemon(name,img)}
                     />
                 </main>
                 </div>

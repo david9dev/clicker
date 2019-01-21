@@ -53,14 +53,9 @@ class Clickarea extends Component
     spawnPokemon()
     {
         this.randomPokemon();
-        //this.randomPosition();
         let int = this.state.number + 1;
-        // let displayBoxesCopy = this.state.displayBoxes.slice()
-
-        // displayBoxesCopy.push(int);
         this.setState({
             number: int,
-            // displayBoxes: displayBoxesCopy
         })
 
     }
@@ -99,14 +94,13 @@ class Clickarea extends Component
     {
         const boxes = this.state.displayBoxes.map((curVal,index) =>
         {
-            console.log(this.state.pokemon)
             return(
                 <Box 
                 key={index} 
                 index={index}
                 pokemon = {curVal}
                 destroy={(index,stop) => this.despawnPokemon(index,stop)}
-                addCollection={(name, color) => this.props.createPokemon(name,color) }
+                addCollection={(name, img) => this.props.addPokemon(name, img) }
                 />
             )
         })

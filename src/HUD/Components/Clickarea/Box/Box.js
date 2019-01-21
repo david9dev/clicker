@@ -3,10 +3,10 @@ import './Box.css'
 
 // let clear = 0;
 // let sec = 0;
-function popBox(destroy, addCollection, index, name, color)
+function popBox(destroy, addCollection, index, name, img)
 {
     destroy(index);
-    addCollection(name, color);
+    addCollection(name, img);
     // clearTimeout(clear);
 }
 

@@ -42,7 +42,7 @@ module.exports = {
         id++;
         const newPoke = {
             name: request.body.name,
-            color: request.body.color,
+            img: request.body.img,
             id: id
         }
         caughtPokemon.push(newPoke);
