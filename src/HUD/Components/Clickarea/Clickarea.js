@@ -11,87 +11,103 @@ class Clickarea extends Component
             displayBoxes: [],
             recentClicked: {},
             number: 0,
-            paused: false
         }
         this.spawnBox = this.spawnBox.bind(this);
         this.despawnBox = this.despawnBox.bind(this);
-        this.stop = this.stop.bind(this);
-
-        //this.pause = false;
-        this.timesRendered = 0;
-        this.clear = 0;
+        this.randomName = this.randomName.bind(this);
+        this.randomColor = this.randomColor.bind(this);
+        this.randomPosition = this.randomPosition.bind(this);
+        this.timer = this.timer.bind(this);
     }
 
-spawnBox()
-{
-    let int = this.state.number + 1;
-    let displayBoxesCopy = this.state.displayBoxes.slice()
+    randomName(box) {
+        const includeString = "abcdefghijklmnopqrstuvwxyz";
+        let name = "";
+        for (let i = 0; i < 4; i++) {
+            name += includeString.split("")[Math.floor(Math.random() * 25)]
+        }
+        box.name = name;
+        return box;
+    }
 
-    displayBoxesCopy.push(int);
-    this.setState({
-        number: int,
-        displayBoxes: displayBoxesCopy
-    })
+    randomColor(box) {
+        let color = "#";
+        const includeString = "0123456789ABCDEF"
+        for (let i = 0; i < 6; i++) {
+            color += includeString.split("")[Math.floor(Math.random() * 15)]
+        }
+        box.color = color;
 
-}
+        return box
+    }
 
+    randomPosition(box) {
+        box.x = Math.floor(Math.random() * 300)
+        return box;
+    }
 
-despawnBox(index)
-{
-    if(!this.pause)
+    spawnBox()
     {
+        let newBox = {
+            name: "",
+            color: "",
+            x: 0,
+        }
+        this.randomName(newBox);
+        this.randomColor(newBox);
+        this.randomPosition(newBox);
+        let int = this.state.number + 1;
+        let displayBoxesCopy = this.state.displayBoxes.slice()
+
+        displayBoxesCopy.push(newBox);
+        this.setState({
+            number: int,
+            displayBoxes: displayBoxesCopy
+        })
+
+    }
+
+
+    despawnBox(index)
+{
         let copy = this.state.displayBoxes.slice()
         copy.splice(index,1)
 
         this.setState({
             displayBoxes: copy
         })
-        // clearTimeout(this.clear);
-        // this.spawnBox()rs
 
     }
-}
 
-stop()
+    timer(destroy, index, clear, sec)
 {
-    if(this.state.paused)
+    clear = setTimeout(() =>
     {
-        this.setState({
-            paused: false
-        })
-    }
-    else 
-    {
-        this.setState({
-            paused: true
-        })
-    }
-
+        console.log("timer", sec)
+        if(sec === 6)
+        {
+            clearTimeout(clear);
+            destroy(index);
+        }
+        else
+        {
+            sec += 1;
+        }
+    }, 1000)
 }
+
+
     render()
     {
-        // this.timesRendered++;
-        // console.log("clickarea", this.timesRendered)
-        // if(this.props.renderCount >= this.timesRendered)
-        // {
-        //     this.clear = setTimeout(() =>
-        //     {
-        //      this.spawnBox();
-        //     }, 1000)
-        // }
-        // if(this.state.paused)
-        // {
-        //     clearTimeout(this.clear); 
-        // }
         const boxes = this.state.displayBoxes.map((curVal,index) =>
         {
             return(
                 <Box 
-                key={curVal} 
+                key={index} 
                 index={index}
-                paused = {this.state.paused}
+                box = {curVal}
                 destroy={(index,stop) => this.despawnBox(index,stop)}
-                toPop={(name, color) => this.props.method(name,color) }
+                addCollection={(name, color) => this.props.method(name,color) }
                 />
             )
         })

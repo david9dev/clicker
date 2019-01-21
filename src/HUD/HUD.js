@@ -3,7 +3,6 @@ import axios from 'axios';
 import './HUD.css'
 import Clickarea from './Components/Clickarea/Clickarea';
 import Collection from './Components/Collection/Collection';
-import Recentpop from './Components/Recentpop/Recentpop';
 
 class HUD extends Component
 {
@@ -11,11 +10,12 @@ class HUD extends Component
     {
         super();
         this.state = {
-            boxes: [],
+            boxes: [{
+                name: "firstBox",
+                color: "#FFFFFF",
+                id: 0
+            }],
         };
-
-        // this.timesRendered = 10;
-
     }
 
     componentDidMount()
@@ -23,7 +23,6 @@ class HUD extends Component
         axios.get('http://localhost:3002/boxes')
         .then((response) =>
         {
-            //console.log(response.data);
             this.setState({
                 boxes: response.data
             })
@@ -31,7 +30,7 @@ class HUD extends Component
         .catch((error) =>
         {
             console.log(error);
-            alert("error");
+            alert("couldnt get boxes");
         })
     }
 
@@ -51,13 +50,24 @@ class HUD extends Component
         .catch((error) =>
         {
             console.log(error);
-            alert("error");
+            alert("couldnt create box");
         })
     }
 
-    updateBox(boxId)
+    updateBox(string, boxId)
     {
-
+        axios.put(`http://localhost:3002/boxes/${boxId}/${string}`)
+        .then((response) =>
+        {
+            this.setState({
+                boxes: response.data
+            });
+        })
+        .catch((error) => 
+        {
+            console.log(error);
+            alert("couldnt update box");
+        })
     }
 
     deleteBox(boxId)
@@ -72,7 +82,7 @@ class HUD extends Component
         .catch((error) => 
         {
             console.log(error);
-            alert("error");
+            alert("couldnt delet boxes");
         })
 
     }
@@ -83,21 +93,20 @@ class HUD extends Component
             
             return(
                 <div className='HUD'>
-                <section className ='left'>
-                    <Recentpop box={boxes[boxes.length - 1]}/>
-                    <Collection boxes={boxes} method={(id) => this.deleteBox(id)}/>
-                    {/* <button>
-                        display collection
-                    </button> */}
-                </section>
+                <aside>
+                    <Collection
+                    boxes={boxes}
+                    delete={(id) => this.deleteBox(id)}
+                    update={(string, id) => this.updateBox(string, id)}
+                    />
+                </aside>
                 <main>
                     <Clickarea
-                    renderCount={this.timesRendered} 
                     method={(name,color) => this.createBox(name,color)}/>
                 </main>
-                <section className ='right'>
+                {/* <section className ='right'>
 
-                </section>
+                </section> */}
                 </div>
             );
     }

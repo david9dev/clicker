@@ -1,0 +1,14 @@
+.recentpop
+{
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 80%;
+    height: 25%;
+    border: solid black 1px;
+}
+.text
+{
+    margin-top: 45px;
+}

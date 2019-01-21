@@ -1,28 +1,29 @@
 import React from 'react';
+import Collectionbox from './Collectionbox/Collectionbox'
+import Displaybutton from './Displaybutton/Displaybutton';
+import Recentpop from './Recentpop/Recentpop'
 import './Collection.css'
 
 
 function Collection(props)
 {
-    //console.log(props.boxes)
-    const collection = props.boxes.map((curVal,index) => 
-    {
+    return(
+        <div>
+            <Recentpop
+            box={props.boxes[props.boxes.length -1]}
+            />
+            <Collectionbox
+            boxes={props.boxes}
+            method={(id) => props.delete(id)}
+            />
+            <Displaybutton
+            boxes={props.boxes}
+            method={(string, id) => props.update(string,id)}
+            />
 
-        return(
-        <div 
-            key={index}
-            className='caughtBox' style={{backgroundColor: curVal.color}}
-            onClick={() => props.method(curVal.id)}
-            >
+
         </div>
-        )
-    })
- return(
-
-     <div className='collection'>
-         {collection}
-     </div>
- )
+    )
 }
 
 export default Collection;

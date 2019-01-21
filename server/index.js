@@ -10,7 +10,8 @@ app.use(bodyParser.json());
 app.post('/boxes', ctrlr.createBox)
 //read 
 app.get('/boxes', ctrlr.getAll);
-//update app.put('/boxes')
+//update 
+app.put('/boxes/:id/:name', ctrlr.updateBox)
 //delete 
 app.delete('/boxes/:id', ctrlr.deleteBox)
 

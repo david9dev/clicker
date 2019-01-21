@@ -1,119 +1,114 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './Box.css'
 
-class NewBox {
-    constructor(name, color, chance, x, y) {
-        this.name = name;
-        this.sudoId = "";
-        this.chance = chance;
-        this.color = color;
-        this.x = x;
-        this.y = y;
-        this.stop = 0;
-
-    }
-
-
-    gravity() {
-        this.stop = setTimeout(() => {
-            this.y += 1;
-        }, 1000)
-    }
-
-    destroyBox(callback) {
-        // clearTimeout(this.stop)
-    }
-
-    popBox(despawn, collect, index, paused) {
-        if (!paused) {
-            despawn(index);
-            collect(this.name, this.color);
-        }
-    }
+// let clear = 0;
+// let sec = 0;
+function popBox(destroy, addCollection, index, name, color)
+{
+    destroy(index);
+    addCollection(name, color);
+    // clearTimeout(clear);
 }
 
-// function randomName(box)
+// async function timer(destroy, index)
 // {
-//     const includeString = "abcdefghijklmnopqrstuvwxyz";
-//     console.log(Math.random());
-//     return(0)
+//     clear = setTimeout(() =>
+//     {
+//         console.log("timer", sec)
+//         if(sec === 6)
+//         {
+//             clearTimeout(clear);
+//             destroy(index);
+//         }
+//         else
+//         {
+//             sec += 1;
+//         }
+//     }, 1000)
 // }
 
-// function randomColor(box)
-// {
-
-// }
-
-// function randomChance(box)
-// {
-
-// }
-
-// function randomPosition(box)
-// {
-
-// }
-class Box extends Component {
-    constructor() {
-        super();
-        this.state = {
-
-        }
-        this.randomName = this.randomName.bind(this);
-        this.randomColor = this.randomColor.bind(this);
-        this.randomPosition = this.randomPosition.bind(this);
-    }
-
-    randomName(box) {
-        const includeString = "abcdefghijklmnopqrstuvwxyz";
-        let name = "";
-        for (let i = 0; i < 4; i++) {
-            name += includeString.split("")[Math.floor(Math.random() * 25)]
-        }
-        box.name = name;
-        return box;
-    }
-
-    randomColor(box) {
-        let color = "#";
-        for (let i = 0; i < 6; i++) {
-            color += Math.floor(Math.random() * 9)
-        }
-        box.color = color;
-
-        return box
-    }
-
-    randomPosition(box) {
-        box.x = Math.floor(Math.random() * 300)
-        return box;
-    }
-
-
-    render() {
-
-
-        let box = new NewBox('asdf', "#123456", 100, 0, 0);
-        this.randomName(box);
-        this.randomColor(box);
-        this.randomPosition(box);
-
+function Box(props)
+{
         let boxStyle = {
             backgroundColor: 'blue',
-            left: box.x
+            left: props.box.x
         }
-        boxStyle.backgroundColor = box.color;
-        const { destroy, toPop, index, paused } = this.props;
+        boxStyle.backgroundColor = props.box.color;
+        const { destroy, addCollection, index, box:{name, color}} = props;
+        // timer(destroy,index);
         
         return (
             <div
                 className='box'
                 style={boxStyle}
-                onClick={() => box.popBox(destroy, toPop, index, paused)}
+                onClick={() => popBox(destroy, addCollection, index, name, color)}
             >
-                {box.name}
+                {props.box.name}
             </div>
         );
-    }
 }
 export default Box;
+
+// class Box extends React.Component
+// {
+//     constructor()
+//     {
+//         super();
+
+//         this.state = {
+//             clear: 0,
+//             sec: 0
+//         }
+//         this.timer = this.timer.bind(this);
+//         this.popBox = this.popBox.bind(this);
+//     }
+
+//     timer(destroy, index)
+// {
+//     const clear = setTimeout(() =>
+//     {
+//         console.log("timer", this.state.sec)
+//         if(this.state.sec === 6)
+//         {
+//             clearTimeout(this.state.clear);
+//             destroy(index);
+//         }
+//         else
+//         {
+//             this.setState({
+//                 sec: (this.state.sec + 1),
+//                 clear: clear
+//             })
+//         }
+//     }, 1000)
+// }
+// popBox(destroy, addCollection, index, name, color)
+// {
+//     destroy(index);
+//     addCollection(name, color);
+//     clearTimeout(this.state.clear);
+// }
+
+//     render()
+//     {
+//         this.timer(this.props.destroy, this.props.index)
+//              let boxStyle = {
+//             backgroundColor: 'blue',
+//             left: this.props.box.x
+//         }
+//         boxStyle.backgroundColor = this.props.box.color;
+//         const { destroy, addCollection, index, box:{name, color}} = this.props;
+//         // timer(destroy,index);
+        
+//         return (
+//             <div
+//                 className='box'
+//                 style={boxStyle}
+//                 onClick={() => this.popBox(destroy, addCollection, index, name, color)}
+//             >
+//                 {this.props.box.name}
+//             </div>)
+//     }
+// }
+
+// export default Box;

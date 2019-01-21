@@ -34,6 +34,13 @@ module.exports = {
 
     updateBox: function(request, response)
     {
+        const index = boxes.findIndex((curVal) =>
+        {
+            return curVal.id === parseInt(request.params.id, 10)
+        });
+        boxes[index].name = request.params.name;
+
+        response.status(200).send(boxes);
 
     },
 
