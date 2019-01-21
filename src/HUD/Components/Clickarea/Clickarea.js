@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import axios from 'axios'
 import './Clickarea.css'
 import Box from './Box/Box'
 
@@ -12,59 +13,60 @@ class Clickarea extends Component
             recentClicked: {},
             number: 0,
         }
-        this.spawnBox = this.spawnBox.bind(this);
-        this.despawnBox = this.despawnBox.bind(this);
+        this.spawnPokemon = this.spawnPokemon.bind(this);
+        this.despawnPokemon = this.despawnPokemon.bind(this);
         this.randomPokemon = this.randomPokemon.bind(this);
-        this.randomColor = this.randomColor.bind(this);
         this.randomPosition = this.randomPosition.bind(this);
+        this.getPokemon = this.getPokemon.bind(this);
         // this.timer = this.timer.bind(this);
     }
 
-    randomPokemon(box) {
-        const name = Math.floor(Math.random() * 151)
-        box.name = name;
-        return box;
-    }
-
-    randomColor(box) {
-        let color = "#";
-        const includeString = "0123456789ABCDEF"
-        for (let i = 0; i < 6; i++) {
-            color += includeString.split("")[Math.floor(Math.random() * 15)]
-        }
-        box.color = color;
-
-        return box
-    }
-
-    randomPosition(box) {
-        box.x = Math.floor(Math.random() * 300)
-        return box;
-    }
-
-    spawnBox()
+    getPokemon(index)
     {
-        let newBox = {
-            name: "",
-            color: "",
-            x: 0,
-        }
-        this.randomPokemon(newBox);
-        this.randomColor(newBox);
-        this.randomPosition(newBox);
-        let int = this.state.number + 1;
-        let displayBoxesCopy = this.state.displayBoxes.slice()
+        axios.get(`http://localhost:3002/poke/${index}`)
+        .then((response) => {
+            this.randomPosition(response.data);
+            const copy = this.state.displayBoxes.slice();
+            copy.push(response.data)
+            this.setState({
+                displayBoxes: copy
+            })
+        })
+        .catch((error) => 
+        {
+            console.log(error);
+            alert("couldnt get pokemon");
+        })
 
-        displayBoxesCopy.push(newBox);
+    }
+
+    randomPokemon() {
+        const index = Math.floor(Math.random() * 151)
+        this.getPokemon(index);
+    }
+
+    randomPosition(pokemon) {
+        pokemon.x = Math.floor(Math.random() * 300)
+        return pokemon;
+    }
+
+    spawnPokemon()
+    {
+        this.randomPokemon();
+        //this.randomPosition();
+        let int = this.state.number + 1;
+        // let displayBoxesCopy = this.state.displayBoxes.slice()
+
+        // displayBoxesCopy.push(int);
         this.setState({
             number: int,
-            displayBoxes: displayBoxesCopy
+            // displayBoxes: displayBoxesCopy
         })
 
     }
 
 
-    despawnBox(index)
+    despawnPokemon(index)
 {
         let copy = this.state.displayBoxes.slice()
         copy.splice(index,1)
@@ -97,20 +99,21 @@ class Clickarea extends Component
     {
         const boxes = this.state.displayBoxes.map((curVal,index) =>
         {
+            console.log(this.state.pokemon)
             return(
                 <Box 
                 key={index} 
                 index={index}
-                box = {curVal}
-                destroy={(index,stop) => this.despawnBox(index,stop)}
-                addCollection={(name, color) => this.props.method(name,color) }
+                pokemon = {curVal}
+                destroy={(index,stop) => this.despawnPokemon(index,stop)}
+                addCollection={(name, color) => this.props.createPokemon(name,color) }
                 />
             )
         })
         return(
             <div className='clickarea'>
                 <button
-                onClick={() => this.spawnBox()}>
+                onClick={() => this.spawnPokemon()}>
                     spawn
                 </button>
                 {this.state.number}

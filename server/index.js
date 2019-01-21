@@ -7,13 +7,14 @@ const app = express();
 app.use(bodyParser.json());
 
 //create 
-app.post('/boxes', ctrlr.createBox)
+app.post('/poke', ctrlr.catchPoke)
 //read 
-app.get('/boxes', ctrlr.getAll);
+app.get('/poke', ctrlr.getAll);
+app.get('/poke/:index', ctrlr.getPokemon)
 //update 
-app.put('/boxes/:id/:name', ctrlr.updateBox)
+app.put('/poke/:id/:name', ctrlr.renamePoke)
 //delete 
-app.delete('/boxes/:id', ctrlr.deleteBox)
+app.delete('/poke/:id', ctrlr.releasePoke)
 
 app.listen(3002,() => 
 {

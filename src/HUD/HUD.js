@@ -10,17 +10,13 @@ class HUD extends Component
     {
         super();
         this.state = {
-            boxes: [{
-                name: "firstBox",
-                color: "#FFFFFF",
-                id: 0
-            }],
+            boxes: []
         };
     }
 
     componentDidMount()
     {
-        axios.get('http://localhost:3002/boxes')
+        axios.get('http://localhost:3002/poke')
         .then((response) =>
         {
             this.setState({
@@ -40,7 +36,7 @@ class HUD extends Component
             name: name,
             color: color
         }
-        axios.post('http://localhost:3002/boxes',newBox)
+        axios.post('http://localhost:3002/poke',newBox)
         .then((response) =>
         {
             this.setState({
@@ -56,7 +52,7 @@ class HUD extends Component
 
     updateBox(string, boxId)
     {
-        axios.put(`http://localhost:3002/boxes/${boxId}/${string}`)
+        axios.put(`http://localhost:3002/poke/${boxId}/${string}`)
         .then((response) =>
         {
             this.setState({
@@ -72,7 +68,7 @@ class HUD extends Component
 
     deleteBox(boxId)
     {
-        axios.delete(`http://localhost:3002/boxes/${boxId}`)
+        axios.delete(`http://localhost:3002/poke/${boxId}`)
         .then((response) =>
         {
             this.setState({
@@ -102,7 +98,9 @@ class HUD extends Component
                 </aside>
                 <main>
                     <Clickarea
-                    method={(name,color) => this.createBox(name,color)}/>
+                    pushPokemon={(name,color) => this.createBox(name,color)}
+                    getPokemon={(index) => this.getPokemon(index)}
+                    />
                 </main>
                 </div>
             );

@@ -30,20 +30,19 @@ function popBox(destroy, addCollection, index, name, color)
 function Box(props)
 {
         let boxStyle = {
-            backgroundColor: 'blue',
-            left: props.box.x
+            left: props.pokemon.x
         }
-        boxStyle.backgroundColor = props.box.color;
-        const { destroy, addCollection, index, box:{name, color}} = props;
+        const { destroy, addCollection, index, pokemon:{name, img}} = props;
         // timer(destroy,index);
+        // console.log(name);
         
         return (
             <div
                 className='box'
                 style={boxStyle}
-                onClick={() => popBox(destroy, addCollection, index, name, color)}
+                onClick={() => popBox(destroy, addCollection, index, name, img)}
             >
-                {props.box.name}
+                <img src={img} alt={name}/>
             </div>
         );
 }
