@@ -1,10 +1,4 @@
-let boxes = [
-    {
-        name: "",
-        color: "",
-        id: 0
-    }
-];
+let boxes = [];
 let id = 0;
 
 

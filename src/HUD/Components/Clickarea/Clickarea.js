@@ -14,18 +14,14 @@ class Clickarea extends Component
         }
         this.spawnBox = this.spawnBox.bind(this);
         this.despawnBox = this.despawnBox.bind(this);
-        this.randomName = this.randomName.bind(this);
+        this.randomPokemon = this.randomPokemon.bind(this);
         this.randomColor = this.randomColor.bind(this);
         this.randomPosition = this.randomPosition.bind(this);
-        this.timer = this.timer.bind(this);
+        // this.timer = this.timer.bind(this);
     }
 
-    randomName(box) {
-        const includeString = "abcdefghijklmnopqrstuvwxyz";
-        let name = "";
-        for (let i = 0; i < 4; i++) {
-            name += includeString.split("")[Math.floor(Math.random() * 25)]
-        }
+    randomPokemon(box) {
+        const name = Math.floor(Math.random() * 151)
         box.name = name;
         return box;
     }
@@ -53,7 +49,7 @@ class Clickarea extends Component
             color: "",
             x: 0,
         }
-        this.randomName(newBox);
+        this.randomPokemon(newBox);
         this.randomColor(newBox);
         this.randomPosition(newBox);
         let int = this.state.number + 1;
@@ -79,22 +75,22 @@ class Clickarea extends Component
 
     }
 
-    timer(destroy, index, clear, sec)
-{
-    clear = setTimeout(() =>
-    {
-        console.log("timer", sec)
-        if(sec === 6)
-        {
-            clearTimeout(clear);
-            destroy(index);
-        }
-        else
-        {
-            sec += 1;
-        }
-    }, 1000)
-}
+//     timer(destroy, index, clear, sec)
+// {
+//     clear = setTimeout(() =>
+//     {
+//         console.log("timer", sec)
+//         if(sec === 6)
+//         {
+//             clearTimeout(clear);
+//             destroy(index);
+//         }
+//         else
+//         {
+//             sec += 1;
+//         }
+//     }, 1000)
+// }
 
 
     render()

@@ -104,9 +104,6 @@ class HUD extends Component
                     <Clickarea
                     method={(name,color) => this.createBox(name,color)}/>
                 </main>
-                {/* <section className ='right'>
-
-                </section> */}
                 </div>
             );
     }
