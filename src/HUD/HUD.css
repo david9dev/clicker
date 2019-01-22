@@ -6,19 +6,10 @@
     display: flex;
     justify-content: center;
 }
-.left
+aside
 {
-    border: solid 1px black;
-    position: relative;
-    top: 30%;
-    width: 25%;
-    height: 50%;
-    margin: 15px;
-}
-.right
-{
-    border: solid 1px black;
-    width: 25%
+    width: 30%;
+    padding-right: 30px;
 }
 main
 {

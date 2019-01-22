@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Editbutton from './Editbutton/Editbutton'
+import './Displaybutton.css'
 
 // function Displaybutton()
 // {
@@ -45,7 +46,7 @@ class Displaybutton extends Component
             if(this.state.display)
             {
                 return( 
-                <div key={index}>
+                <div className='displayContainer' key={index}>
 
                     <div>
                         {curVal.name}
@@ -55,12 +56,9 @@ class Displaybutton extends Component
                     id={curVal.id}
                     method={this.props.method}/>
 
-                    <div 
+                    <img src={curVal.img} alt={curVal.name}
                     className='whole'
-                    style={{backgroundColor: curVal.color}}
-                    >
-                     {curVal.name}
-                    </div>
+                    />
 
                 </div>
                 );

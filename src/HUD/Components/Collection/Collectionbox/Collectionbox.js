@@ -8,12 +8,12 @@ function Collectionbox(props)
     {
 
         return(
-        <div 
+        <img
+            src={curVal.img} alt={curVal.name}
             key={index}
-            className='caughtBox' style={{backgroundColor: curVal.color}}
+            className='caughtBox'
             onClick={() => props.method(curVal.id)}
-            >
-        </div>
+            />
         )
     })
  return(

@@ -1,0 +1,13 @@
+.whole
+{
+    width: 95px;
+    height: 95px;
+}
+
+.displayContainer
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border: 1px solid black;
+}

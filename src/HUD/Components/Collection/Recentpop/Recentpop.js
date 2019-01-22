@@ -4,17 +4,18 @@ import './Recentpop.css'
 function Recentpop(props)
 {
     let content = "";
-    let color = "#1234567"
+    let img = "";
     if(props.box)
     {
         content = props.box.name;
-        color = props.box.color;
+        img = props.box.img
     }
     return(
-        <div className='recentpop' style={{backgroundColor: color}}>
+        <div className='recentpop' >
         <div className='text'>
         {content}
         </div>
+        <img className='popimg'src={img} alt={content}/>
         </div>
     )
 }

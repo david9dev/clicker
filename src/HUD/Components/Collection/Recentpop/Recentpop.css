@@ -2,13 +2,23 @@
 {
     margin-top: 15px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-content: center;
-    width: 80%;
-    height: 25%;
+    align-items: center;
+    height: 120;
+    width: 120;
+    /* width: 80%;
+    height: 25%; */
     border: solid black 1px;
+    background-color: beige;
 }
 .text
 {
-    margin-top: 45px;
+    margin-top: 0px;
+}
+.popimg
+{
+    height: 95;
+    width: 95;
 }
